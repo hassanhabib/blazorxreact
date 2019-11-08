@@ -1,0 +1,49 @@
+﻿@page "/"
+@namespace BlazorXReact.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlazorXReact</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    <script src="//unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="//unpkg.com/react-dom@16.7.0/umd/react-dom.production.min.js"></script>
+    <script src="//unpkg.com/office-ui-fabric-react@7/dist/office-ui-fabric-react.js"></script>
+
+</head>
+<script>
+    window.RenderReact = (count) => {
+        const Progress = () => React.createElement(
+            Fabric.ProgressIndicator,
+            {
+                label: 'React Counter',
+                description: count,
+                percentComplete: (count % 10) * .1
+            },
+            null);
+
+        const Container = () => React.createElement(
+            'div',
+            {
+                style: {
+                    marginTop: 10
+                }
+            },
+            Progress()
+        )
+        ReactDOM.render(Container(), document.getElementById('reactCounter'))
+    }
+</script>
+<body>
+    <app>
+        @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
+    </app>
+
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>
